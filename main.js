@@ -1,4 +1,5 @@
 var canvas = new fabric.Canvas("myCanvas");
+player_object = "";
 
 img_height = 30;
 img_width = 30;
@@ -17,7 +18,19 @@ function new_image(get_image){
     });
     canvas.add(block_img_object);
     });
-    }
+    };
+    function player_update(){
+        fabric.Image.fromURL("player.png", function(Img){
+        player_object = Img;
+        player_object.scaleToWidth(150);
+        player_object.scaleToHeight(140);
+        player_object.set({
+            top:player_y, 
+            left:player_x
+        });
+        canvas.add(player_object);
+    });
+    };
 
     window.addEventListener("keydown", mykeydown);
 
@@ -33,7 +46,7 @@ function new_image(get_image){
         if(e.shiftKey == true && keyPressed == "77"){
             console.log("Shift and m are pressed together");
             img_width = img_width - 10;
-            img_height = img_height - 20;
+            img_height = img_height - 10;
             document.getElementById("current_width").innerHTML = img_width;
             document.getElementById("current_height").innerHTML = img_height;
         }
@@ -57,4 +70,60 @@ function new_image(get_image){
             console.log("l key is pressed");
             new_image("ironman_legs.png");
         }
-    }
+        if(keyPressed == "38"){
+            console.log("up");
+            up();
+        }
+        if(keyPressed == "40"){
+            console.log("down");
+            down();
+        }
+        if(keyPressed == "37"){
+            console.log("left");
+            left();
+        }
+        if(keyPressed == "39"){
+            console.log("right");
+            right();
+        }
+    };
+
+    function up(){
+        if(player_y >= 0){
+            player_y = player_y - img_height;
+            console.log("block img height = " + img_height);
+            console.log("when up pressed x = "+player_x+",y = " +player_y);
+            canvas.remove(player_object);
+            player_update();
+        };
+    };
+
+     function down(){
+         if(player_y <= 500){
+            player_y = player_y + img_height;
+        console.log("block img height = " + img_height);
+        console.log("when up pressed x = " + player_x + ",y = " + player_y);
+        canvas.remove(player_object);
+        player_update();
+    };
+};
+
+    function left(){
+        if(player_x >= 300){
+            player_x = player_x - img_width;
+            console.log("block img width = " + img_width);
+            console.log("when up pressed x = " + player_x + ",y = " + player_y);
+            canvas.remove(player_object);
+            player_update();
+        };
+    };
+
+    function right(){
+        if(player_x <= 850){
+            player_x = player_x + img_width;
+            console.log("block img width = " + img_width);
+            console.log("when up pressed x = " + player_x + ",y = " + player_y);
+            canvas.remove(player_object);
+            player_update();
+        };
+    };
